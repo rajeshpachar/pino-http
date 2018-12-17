@@ -1,11 +1,11 @@
 {
-  "name": "pino-http",
-  "version": "4.1.0",
+  "name": "thb-pino-http",
+  "version": "1.0.0",
   "description": "High-speed HTTP logger for Node.js",
   "main": "logger.js",
   "dependencies": {
-    "pino": "^5.0.0",
-    "pino-std-serializers": "^2.1.0"
+    "pino": "^5.10.1",
+    "pino-std-serializers": "^2.3.0"
   },
   "devDependencies": {
     "autocannon": "^2.4.1",

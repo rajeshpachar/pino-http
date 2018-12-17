@@ -59,7 +59,9 @@ function pinoLogger (opts, stream) {
 
   function loggingMiddleware (req, res, next) {
     req.id = genReqId(req)
-    req.log = res.log = logger.child({req: req})
+    // req.log = res.log = logger.child({req: req})
+
+     req.log = res.log = logger;
     res[startTime] = res[startTime] || Date.now()
     if (!req.res) { req.res = res }
 
