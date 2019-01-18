@@ -41,10 +41,11 @@ function pinoLogger (opts, stream) {
     var log = this.log
     var responseTime = Date.now() - this[startTime]
     var level = customLogLevel ? customLogLevel(this, err) : useLevel
-
+    
     if (err || this.err || this.statusCode >= 500) {
       log[level]({
         res: this,
+        statusCode : this.statusCode,
         err: err || this.err || new Error('failed with status code ' + this.statusCode),
         responseTime: responseTime
       }, 'request errored')
@@ -52,16 +53,18 @@ function pinoLogger (opts, stream) {
     }
 
     log[level]({
-      res: this,
+      statusCode : this.statusCode,
       responseTime: responseTime
     }, 'request completed')
   }
 
   function loggingMiddleware (req, res, next) {
     req.id = genReqId(req)
-    // req.log = res.log = logger.child({req: req})
+    req.log = res.log = logger.child({query: req.query,
+      originalUrl: req.originalUrl,
+       params: req.params})
 
-     req.log = res.log = logger;
+    req.log = res.log = logger;
     res[startTime] = res[startTime] || Date.now()
     if (!req.res) { req.res = res }
 
